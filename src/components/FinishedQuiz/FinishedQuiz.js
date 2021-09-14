@@ -4,22 +4,22 @@ import "./FinishedQuiz.css";
 import Button from "../UI/Button/Button";
 import { Link } from "react-router-dom";
 
-const FinishedQuiz = ({ quiz, results, onRetry }) => {
-  console.log(results);
-  const succesCount = Object.keys(results).reduce((total, key) => {
-    if (results[key] === "succes") {
+const FinishedQuiz = (props) => {
+  const successCount = Object.keys(props.results).reduce((total, key) => {
+    if (props.results[key] === "success") {
       total++;
     }
+
     return total;
   }, 0);
 
   return (
     <div className="FinishedQuiz">
       <ul>
-        {quiz.map((quizItem, index) => {
+        {props.quiz.map((quizItem, index) => {
           const cls = [
             "fa",
-            results[quizItem.id] === "error"
+            props.results[quizItem.id] === "error"
               ? "fa-times error"
               : "fa-check success",
           ];
@@ -34,14 +34,14 @@ const FinishedQuiz = ({ quiz, results, onRetry }) => {
       </ul>
       <p>
         {" "}
-        правильно {succesCount} из {quiz.length}
+        правильно {successCount} из {props.quiz.length}
       </p>
       <div>
-        <Button onClick={onRetry} type="primary">
+        <Button onClick={props.onRetry} type="primary">
           Повторить
         </Button>
         <Link to="/">
-          <Button type="succes">Перейти в список тестов</Button>
+          <Button type="success">Перейти в список тестов</Button>
         </Link>
       </div>
     </div>
